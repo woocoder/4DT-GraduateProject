@@ -14,7 +14,7 @@
 #include "crossover.hpp"
 #include "mutation.hpp"
 #include <random>
-#define GENERATION 50
+#define GENERATION 10
 
 using namespace std;
 
@@ -26,6 +26,7 @@ int main()
 	map<string, map<int, string>> aircraft_speed;
 
 	env_set(&flightrouting, &flightplan, aircraft_speed);
+	cout << flightplan[1].take_off << "\t" << flightplan[2].land << endl;
 	cout << "初始化开始****************************" << endl;
 	
 		double c_p = 0.7, m_p = 0.06;

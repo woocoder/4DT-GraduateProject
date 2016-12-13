@@ -32,13 +32,16 @@ void Chromosome::chro_evaluation()
 		seconds norm_time(3600 * (*it).length / (*it).norm_speed);
 		seconds min_time(3600 * (*it).length / (*it).max_speed);
 		seconds max_time(3600 * (*it).length / (*it).min_speed);
-		ptime min_real_land = (*it).take_off + min_time;
-
+		//cout << norm_time << "\t" << min_time << "\t" << max_time << endl;
+ 		ptime min_real_land = (*it).take_off + min_time;
+		//cout << min_real_land << endl;
 		if (min_real_land>(*it).land)
 		{
 			time_duration delay = min_real_land - (*it).land;
 			total_dalay_m += delay.total_seconds() / 60;
+			//cout << delay << "\t"  << delay.total_seconds() << "\t" << total_dalay_m << endl;
 		}
+				
 	}
 	this->evaluation = (total_dalay_m);
 	this->chro_penalty();

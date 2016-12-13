@@ -60,7 +60,7 @@ void Flightplan::set_point_time()
 void Flightplan::set_length()
 {
 	this->length = 0;
-	for (auto it = this->flightrouting.begin(); it != this->flightrouting.begin(); it++)
+	for (auto it = this->flightrouting.begin(); it != this->flightrouting.end(); it++)
 	{
 		this->length += (*it).between_pre_point;
 	}
