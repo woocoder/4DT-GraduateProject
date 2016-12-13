@@ -29,7 +29,7 @@ int main()
 	cout << "初始化开始****************************" << endl;
 	
 		double c_p = 0.7, m_p = 0.06;
-		int k=10;
+		int k=40;
 		int test = 0;
 		cout << "\nk值为" << k <<endl;
 		/*switch(ij)
@@ -73,6 +73,7 @@ int main()
 			default:
 				break;
 		}*/
+
 		for (int ii = 0; ii != 10; ii++)
 		{
 			vector<Chromosome> chro_population = initialize(flightplan, flightrouting, aircraft_speed);
