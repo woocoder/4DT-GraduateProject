@@ -20,7 +20,7 @@ void Waypoint::copy_waypoint(Waypoint& initial_waypoint)
 
 void Waypoint::print()
 {
-    cout << this->name << " : " << this->between_pre_point<<" "<<"->"<<this->min_time<<'&'<<this->norm_time<< this->max_time<<endl ;
+    cout << this->name << " : " << this->between_pre_point<<" "<<"->"<<this->min_time<<' '<<this->norm_time<< " " << this->max_time<<endl ;
     
 }
 void Waypoint::set_waypoint(string r_name,double r_dist)

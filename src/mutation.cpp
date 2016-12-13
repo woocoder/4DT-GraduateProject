@@ -24,7 +24,8 @@ vector<Chromosome> mutation(double m_p,vector<Chromosome>& chro_population, map<
 		//            continue;
 		//        }
 		Chromosome* chro_temp = new Chromosome();
-		chro_temp->set_copy_from_chro(it->code_chro, *it);
+		//chro_temp->set_copy_from_chro(it->code_chro, *it);
+		*chro_temp = *it;
 		new_chro_population.push_back(*chro_temp);
 		delete chro_temp;
 		for (auto ic = (*it).flightplan_list.begin(); ic != (*it).flightplan_list.end(); ic++)
@@ -33,11 +34,19 @@ vector<Chromosome> mutation(double m_p,vector<Chromosome>& chro_population, map<
 			long prob = rd % 100;
 			if (prob < m_p * 100)
 			{
+				/*
+				for (auto aa = ic->flightrouting.begin(); aa != ic->flightrouting.end(); aa++)
+				{
+					aa->print();
+				}
+				cout <<"变异前里程："<< ic->length<<endl;
+				*/
 				//开始变异
 				if (flightrouting.find(((*ic).origination + "-" + (*ic).destination)) != flightrouting.end())
 				{
 					int rd = get_randnum() % flightrouting[(*ic).origination + "-" + (*ic).destination].size();
-					(*ic).set_copy_from_routing(flightrouting[(*ic).origination + "-" + (*ic).destination][rd]);
+					//(*ic).set_copy_from_routing(flightrouting[(*ic).origination + "-" + (*ic).destination][rd]);
+					ic->flightrouting = flightrouting[(*ic).origination + "-" + (*ic).destination][rd];
 				}
 				int rd = get_randnum() % 6;
 				switch (rd)
@@ -67,6 +76,16 @@ vector<Chromosome> mutation(double m_p,vector<Chromosome>& chro_population, map<
 				ic->set_speed(aircraft_speed);
 				ic->set_length();
 				ic->set_point_time();
+				/*
+				cout << endl;
+				for (auto aa = ic->flightrouting.begin(); aa != ic->flightrouting.end(); aa++)
+				{
+					aa->print();
+				}
+				cout << "变异后里程：" << ic->length << endl;
+
+				cout << endl;
+				*/
 			}
 
 		}

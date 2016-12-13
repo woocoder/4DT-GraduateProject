@@ -29,9 +29,9 @@ void Flightplan::set_point_time()
 		if (it == this->flightrouting.begin())
 		{
 			it->norm_time = this->take_off;
-			//            minutes m(5);
-			//            it->min_time = it->norm_time - m;
-			//            it->max_time = it->norm_time + m;
+			minutes m(5);
+			it->min_time = it->norm_time - m;
+			it->max_time = it->norm_time + m;
 			//            cout<<it->norm_time<<endl;
 
 		}
@@ -48,7 +48,7 @@ void Flightplan::set_point_time()
 			//            cout <<(it->between_pre_point*3600)/((this->norm_speed)) <<endl;
 			it->norm_time = ((it - 1)->norm_time) + norm_time_dur;
 			it->min_time = ((it - 1)->min_time) + min_time_dur;
-			it->max_time = ((it - 1)->norm_time) + max_time_dur;
+			it->max_time = ((it - 1)->max_time) + max_time_dur;
 
 			//            cout << "norm_time_dur" << norm_time_dur <<endl;
 			//            cout << it->name << ": norm_time: " << it->norm_time <<endl;

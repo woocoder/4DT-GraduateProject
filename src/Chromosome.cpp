@@ -20,7 +20,7 @@ void Chromosome::set_conflict()
 	*/
 	map<string, vector<ptime>> waypoint_time;
 	this->conflict_num = 0;
-	seconds conflict_time_duration(30);
+	seconds conflict_time_duration(60);
 	//cout << "conflict_time_duration" <<conflict_time_duration<<endl;
 	for (auto it = this->flightplan_list.begin(); it != this->flightplan_list.end(); it++)
 	{

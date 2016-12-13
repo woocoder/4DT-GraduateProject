@@ -32,6 +32,7 @@ vector<Chromosome> crossover(int k,double c_p ,vector<Chromosome>& chro_populati
 		return chro_population;
 	}
 	int size = (int)chro_population.size();
+	/*
 	int total_evaluation = 0, average_evaluation = 0, max_evaluation = 0;
 	for (auto it = chro_population.begin(); it != chro_population.end(); it++)
 	{
@@ -42,6 +43,8 @@ vector<Chromosome> crossover(int k,double c_p ,vector<Chromosome>& chro_populati
 		total_evaluation += it->evaluation;
 	}
 	average_evaluation = total_evaluation / size;
+	*/
+
 	//double control_index = 2; // 控制最大值与平均值的差值影响
 	//double temp = 1 / (((double)max_evaluation - (double)average_evaluation)*control_index + 1);
 	//    if (temp ==0)
@@ -112,8 +115,8 @@ vector<Chromosome> crossover(int k,double c_p ,vector<Chromosome>& chro_populati
 				{
 					//开始交叉
 					Flightplan temp_flightplan = id;
-					id = iu;
-					iu = temp_flightplan;
+					*iw = iu;
+					*ic = temp_flightplan;
 				}
 				//it->chro_evaluation();
 				//ie->chro_evaluation();
