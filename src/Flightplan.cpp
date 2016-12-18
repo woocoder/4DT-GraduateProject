@@ -161,7 +161,6 @@ void Flightplan::set_copy_from_routing(vector<Waypoint> initial_waypoint)
 void Flightplan::set_copy_from_flightplan(Flightplan flp)
 {
 	this->flightrouting.clear();
-
 	this->aircraft = flp.aircraft;
 	this->origination = flp.origination;
 	this->destination = flp.destination;

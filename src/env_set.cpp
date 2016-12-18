@@ -250,6 +250,7 @@ void env_set(map<string, vector<vector<Waypoint>>>* flightrouting, vector<Flight
 				auto c = (*flightrouting)[flp_s][0];
 				temp_flp->set_copy_from_routing((*flightrouting)[flp_s][0]);
 				temp_flp->set_point_time();
+				temp_flp->relationdegree = 0;
 				flightplan->push_back(*temp_flp);
 				delete temp_flp;
 			}

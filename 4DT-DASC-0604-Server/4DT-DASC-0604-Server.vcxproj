@@ -91,6 +91,7 @@
     <ClInclude Include="..\include\Flightplan.hpp" />
     <ClInclude Include="..\include\initialize.hpp" />
     <ClInclude Include="..\include\mutation.hpp" />
+    <ClInclude Include="..\include\relationdegree.hpp" />
     <ClInclude Include="..\include\resource.h" />
     <ClInclude Include="..\include\selection.hpp" />
     <ClInclude Include="..\include\util.hpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="..\src\initialize.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\mutation.cpp" />
+    <ClCompile Include="..\src\relationdegree.cpp" />
     <ClCompile Include="..\src\selection.cpp" />
     <ClCompile Include="..\src\util.cpp" />
     <ClCompile Include="..\src\Waypoint.cpp" />

@@ -48,6 +48,9 @@
     <ClInclude Include="..\include\Waypoint.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\relationdegree.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Chromosome.cpp">
@@ -81,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Waypoint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\relationdegree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

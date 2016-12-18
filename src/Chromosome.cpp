@@ -24,6 +24,7 @@ void Chromosome::set_conflict()
 	//cout << "conflict_time_duration" <<conflict_time_duration<<endl;
 	for (auto it = this->flightplan_list.begin(); it != this->flightplan_list.end(); it++)
 	{
+		it->relationdegree = 0;
 		for (auto ic = it->flightrouting.begin() + 1; ic != it->flightrouting.end() - 1; ic++)
 		{   //首末两项是机场,使其中保持有序。
 			//            cout << "ic->norm_time\n"<<ic->norm_time<<endl;
@@ -58,6 +59,7 @@ void Chromosome::set_conflict()
 					if (ic->norm_time - (*id) <= conflict_time_duration)
 					{
 						this->conflict_num++;
+						it->relationdegree++;
 					}
 					id++;
 				}
@@ -69,6 +71,7 @@ void Chromosome::set_conflict()
 					while ((ie != waypoint_time[temp_name].end()) && ((*ie) - (ic->norm_time) <= conflict_time_duration))
 					{
 						this->conflict_num++;
+						it->relationdegree++;
 						ie++;
 					}
 				}
@@ -135,7 +138,8 @@ vector<Chromosome> Chromosome::set_random_population(Chromosome chro_initial, ma
 		{
 			//            it->flp_print_to_cout();
 			Flightplan* flp_temp = new Flightplan();
-			flp_temp->set_copy_from_flightplan(*it);
+			//flp_temp->set_copy_from_flightplan(*it);
+			*flp_temp = *it;
 			string key_airport = (*it).origination + "-" + (*it).destination;
 			auto rd = get_randnum() % ((*flightrouting)[key_airport].size());
 			/*
@@ -143,8 +147,7 @@ vector<Chromosome> Chromosome::set_random_population(Chromosome chro_initial, ma
 			*/
 			int rd_fl = get_randnum() % 5;
 			switch (rd_fl) {
-			case 0:
-				it->fly_level = 157;
+			case 0: 
 				break;
 			case 1:
 				it->fly_level = 217;
@@ -163,13 +166,13 @@ vector<Chromosome> Chromosome::set_random_population(Chromosome chro_initial, ma
 			}
 
 			flp_temp->set_copy_from_routing((*flightrouting)[key_airport][rd]);
-			//            flp_temp->flp_print_to_cout();
+			//flp_temp->flp_print_to_cout();
 			flp_temp->set_speed(aircraft_speed);
 			int rdt = (get_randnum() % 10) - 5;
 			minutes m(rdt);
 			flp_temp->take_off = flp_temp->take_off + m;
 			flp_temp->set_point_time();
-			//            flp_temp->flp_print_to_cout();
+			//flp_temp->flp_print_to_cout();
 			flp_list_temp.push_back(*flp_temp);
 			delete flp_temp;
 		}

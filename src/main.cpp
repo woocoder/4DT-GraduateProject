@@ -13,6 +13,7 @@
 #include "selection.hpp"
 #include "crossover.hpp"
 #include "mutation.hpp"
+#include "relationdegree.hpp"
 #include <random>
 #define GENERATION 10
 
@@ -30,6 +31,7 @@ int main()
 	cout << "初始化开始****************************" << endl;
 	
 		double c_p = 0.7, m_p = 0.06;
+		bool thisActive = false;
 		int k=40;
 		int test = 0;
 		cout << "\nk值为" << k <<endl;
@@ -104,8 +106,9 @@ int main()
 			GA
 			*/
 
-			vector<Chromosome> chro_crossovered_propulation;
-			vector<Chromosome> chro_mutated_propulation;
+			vector<Chromosome> chro_crossovered_population;
+			vector<Chromosome> chro_mutated_population;
+			vector<Chromosome> chro_related_population;
 			string temp_1;
 			stringstream s_temp1, s_temp3;
 			string ks,iis;
@@ -124,87 +127,92 @@ int main()
 					chro_population.clear();
 					//vector<Chromosome>(chro_population).swap(chro_population);
 
-					for (auto it = chro_mutated_propulation.begin(); it != chro_mutated_propulation.end(); it++)
-					{
-						chro_population.push_back(*it);
-					}
-					chro_mutated_propulation.clear();
-					chro_crossovered_propulation.clear();
-					//vector<Chromosome>(chro_mutated_propulation).swap(chro_mutated_propulation);
-					//vector<Chromosome>(chro_crossovered_propulation).swap(chro_crossovered_propulation);
+					//for (auto it = chro_mutated_population.begin(); it != chro_mutated_population.end(); it++)
+					//{
+						//chro_population.push_back(*it);
+					//}
+					chro_population = chro_related_population;
+					chro_related_population.clear();
+					chro_crossovered_population.clear();
+					//vector<Chromosome>(chro_mutated_population).swap(chro_mutated_population);
+					//vector<Chromosome>(chro_crossovered_population).swap(chro_crossovered_population);
 
 				}
 
 				cout << "第" << i + 1 << "代计算<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 				cout << "\n初始种群大小\n" << chro_population.size() << "初始种群得分" << initial_goal / chro_population.size() << endl;
 				cout << "选择开始****************************" << endl;
-				vector<Chromosome> Chro_new_propulation = selection(chro_population);
+				vector<Chromosome> Chro_new_population = selection(chro_population);
 				chro_population.clear();
 				//vector<Chromosome>(chro_population).swap(chro_population);
 				//释放初始种群
 
 				//        chro_population.clear();
 				//        vector<Chromosome>(chro_population).swap(chro_population);
-				cout << Chro_new_propulation.size() << endl;
+				cout << Chro_new_population.size() << endl;
 				cout << "选择结束****************************" << endl;
 				stringstream s_temp;
 				string s;
 				s_temp << i;
 				s_temp >> s;
 				//        ofstream f_chro_s("/Users/thinking/Developer/4dttest/4dttest/output/chro_seleted_"+s+"_out.txt");
-				//        for (auto it = Chro_new_propulation.begin(); it != Chro_new_propulation.end(); it++)
+				//        for (auto it = Chro_new_population.begin(); it != Chro_new_population.end(); it++)
 				//        {
 				//            (*it).chro_evaluation();
 				//        }
 				cout << "交叉开始****************************" << endl;
 
-				vector<Chromosome> temp_chro_cro = crossover(k,c_p,Chro_new_propulation);
-				Chro_new_propulation.clear();
-				//vector<Chromosome>(Chro_new_propulation).swap(Chro_new_propulation);
+				vector<Chromosome> temp_chro_cro = crossover(k,c_p,Chro_new_population);
+				Chro_new_population.clear();
+				//vector<Chromosome>(Chro_new_population).swap(Chro_new_population);
 				for (auto it = temp_chro_cro.begin(); it != temp_chro_cro.end(); it++)
 				{
-					chro_crossovered_propulation.push_back(*it);
+					chro_crossovered_population.push_back(*it);
 				}
 				temp_chro_cro.clear();
 				//vector<Chromosome>(temp_chro_cro).swap(temp_chro_cro);
-				if (chro_crossovered_propulation.size() == 0)
+				if (chro_crossovered_population.size() == 0)
 				{
 					exit(1);
 				}
-				cout << chro_crossovered_propulation.size() << endl;
+				cout << chro_crossovered_population.size() << endl;
 				cout << "交叉结束****************************" << endl;
 				//        ofstream f_chro_c("/Users/thinking/Developer/4dttest/4dttest/output/chro_crossovered"+s+"_out.txt");
-				//        for (auto it = chro_crossovered_propulation.begin(); it != chro_crossovered_propulation.end(); it++)
+				//        for (auto it = chro_crossovered_population.begin(); it != chro_crossovered_population.end(); it++)
 				//        {
 				//            //cout << "第"<<it->code_chro << "条评估开始" << endl;
 				//            (*it).chro_evaluation();
 				//            cout << it->evaluation<<endl;
 				//        }
-				//        sort(chro_mutated_propulation.begin(), chro_mutated_propulation.end(),less<Chromosome>());
+				//        sort(chro_mutated_population.begin(), chro_mutated_population.end(),less<Chromosome>());
 				cout << "变异开始****************************" << endl;
-				chro_mutated_propulation = mutation(m_p,chro_crossovered_propulation, flightrouting, aircraft_speed);
-				chro_crossovered_propulation.clear();
-				//vector<Chromosome>(chro_crossovered_propulation).swap(chro_crossovered_propulation);
-				cout << chro_mutated_propulation.size() << endl;
+				chro_mutated_population = mutation(m_p,chro_crossovered_population, flightrouting, aircraft_speed);
+				chro_crossovered_population.clear();
+				//vector<Chromosome>(chro_crossovered_population).swap(chro_crossovered_population);
+				cout << chro_mutated_population.size() << endl;
 				cout << "变异结束****************************" << endl;
 				cout << "终极染色体写入开始****************************" << endl;
 				//        ofstream f_chro_m("/Users/thinking/Developer/4dttest/4dttest/output/chro_result"+s+"_out.txt");
-				cout << chro_mutated_propulation.size() << endl;
+				cout << chro_mutated_population.size() << endl;
 				double final_goal = 0;
-				for (auto it = chro_mutated_propulation.begin(); it != chro_mutated_propulation.end(); it++)
+				for (auto it = chro_mutated_population.begin(); it != chro_mutated_population.end(); it++)
 				{
 					//cout << "第"<<it->code_chro << "条评估开始" << endl;
 					(*it).chro_evaluation();
 					final_goal += it->evaluation;
 				}
-				cout << "\n终极种群大小\n" << chro_mutated_propulation.size() << "终极种群得分" << final_goal / chro_mutated_propulation.size() << endl;
+				cout << "\n终极种群大小\n" << chro_mutated_population.size() << "终极种群得分" << final_goal / chro_mutated_population.size() << endl;
 				initial_goal = final_goal;
+
+				cout << "\n航班相关性种群大小\n" << chro_mutated_population.size() << "终极种群得分" << final_goal / chro_mutated_population.size() << endl;
+				chro_related_population = relationdegree(chro_mutated_population, flightrouting, aircraft_speed,thisActive);
+				chro_mutated_population.clear();
 				cout << "终极染色体写入结束****************************" << endl;
 				//        f_chro_result.close();
 
-				sort(chro_mutated_propulation.begin(), chro_mutated_propulation.end(), less<Chromosome>());
-				auto ic = chro_mutated_propulation.begin();
-				for (auto it = chro_mutated_propulation.begin(); it != chro_mutated_propulation.end(); it++) {
+				sort(chro_related_population.begin(), chro_related_population.end(), less<Chromosome>());
+				auto ic = chro_related_population.begin();
+				for (auto it = chro_related_population.begin(); it != chro_related_population.end(); it++) {
 					cout << it->evaluation << endl;
 				}
 				//f_chro_result<<"#第"<<s<<"代染色体适应度函数值\n"<<

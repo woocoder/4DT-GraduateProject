@@ -26,6 +26,7 @@ public:
 	ptime land;
 	string aircraft_type;
 	int fly_level;
+	int relationdegree;
 	double norm_speed, min_speed, max_speed;
 	vector<Waypoint> flightrouting;
 	double length;

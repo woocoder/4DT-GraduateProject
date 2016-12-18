@@ -68,14 +68,14 @@ vector<Chromosome> selection(vector<Chromosome>& chro_population)
 	//        
 	//    }
 	//    }
-	vector<Chromosome> Chro_new_propulation;//新种群
+	vector<Chromosome> Chro_new_population;//新种群
 											//long select_size = chro_population.size()/2;
 	for (auto it = chro_population.begin(); it != chro_population.end() - 10; it++) {
-		Chro_new_propulation.push_back(*it);
+		Chro_new_population.push_back(*it);
 	}
 
 	//    for (auto it = select_set.begin(); it!= select_set.end(); it++) {
-	//        Chro_new_propulation.push_back(**it);
+	//        Chro_new_population.push_back(**it);
 	//    }
-	return Chro_new_propulation;
+	return Chro_new_population;
 }
