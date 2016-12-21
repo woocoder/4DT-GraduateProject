@@ -52,24 +52,23 @@ vector<Chromosome> mutation(double m_p,vector<Chromosome>& chro_population, map<
 				switch (rd)
 				{
 				case 0:
-					ic->fly_level = 60;
-					break;
-				case 1:
 					ic->fly_level = 157;
 					break;
-				case 2:
+				case 1:
 					ic->fly_level = 217;
 					break;
-				case 3:
+				case 2:
 					ic->fly_level = 276;
 					break;
-				case 4:
+				case 3:
 					ic->fly_level = 291;
 					break;
-				case 5:
+				case 4:
 					ic->fly_level = 331;
 					break;
-
+				case 5:
+					ic->fly_level = 60;
+					break;
 				default:
 					break;
 				}

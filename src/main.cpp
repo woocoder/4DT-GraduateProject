@@ -15,7 +15,7 @@
 #include "mutation.hpp"
 #include "relationdegree.hpp"
 #include <random>
-#define GENERATION 10
+#define GENERATION 50
 
 using namespace std;
 
@@ -30,12 +30,13 @@ int main()
 	cout << flightplan[1].take_off << "\t" << flightplan[2].land << endl;
 	cout << "初始化开始****************************" << endl;
 	
-		double c_p = 0.7, m_p = 0.06;
-		bool thisActive = false;
+		double c_p = 0.3, m_p = 0.05;
+		bool thisActive = true;
 		int k=40;
 		int test = 0;
 		cout << "\nk值为" << k <<endl;
-		/*switch(ij)
+		/*交叉变异概率计算代码
+		switch(ij)
 		{
 			case 0:
 				c_p = 0.6;
@@ -110,14 +111,22 @@ int main()
 			vector<Chromosome> chro_mutated_population;
 			vector<Chromosome> chro_related_population;
 			string temp_1;
-			stringstream s_temp1, s_temp3;
-			string ks,iis;
+			stringstream s_temp1,s_temp2, s_temp3, s_temp4;
+			string ks,iis,actives,cps,mps;
 			s_temp1 << k;
 			s_temp1 >> ks;
 			s_temp3 << ii;
 			s_temp3 >> iis;
+			s_temp2 << c_p;
+			s_temp2 >> cps;
+			s_temp4 << m_p;
+			s_temp4 >> mps;
 
-			temp_1 = "output/k" + ks +"_"+iis;
+			if (thisActive == true)
+				actives = "true";
+			else
+				actives = "false";
+			temp_1 = "output/A_"+ actives+"_c"+cps+"_m"+mps +"_k" + ks +"_"+iis;
 			ofstream f_chro_result(temp_1 + "_out.txt");
 			Chromosome* it_f = new Chromosome();
 			for (int i = 0; i != GENERATION; i++)
@@ -201,25 +210,34 @@ int main()
 					(*it).chro_evaluation();
 					final_goal += it->evaluation;
 				}
-				cout << "\n终极种群大小\n" << chro_mutated_population.size() << "终极种群得分" << final_goal / chro_mutated_population.size() << endl;
+				cout << "\n终极种群大小\n" << chro_mutated_population.size() << "交叉种群得分" << final_goal / chro_mutated_population.size() << endl;
 				initial_goal = final_goal;
 
-				cout << "\n航班相关性种群大小\n" << chro_mutated_population.size() << "终极种群得分" << final_goal / chro_mutated_population.size() << endl;
 				chro_related_population = relationdegree(chro_mutated_population, flightrouting, aircraft_speed,thisActive);
+
 				chro_mutated_population.clear();
-				cout << "终极染色体写入结束****************************" << endl;
+				final_goal = 0;
+				for (auto it = chro_related_population.begin(); it != chro_related_population.end(); it++)
+				{
+					(*it).chro_evaluation();
+					final_goal += it->evaluation;
+				}
+				cout << "\n航班相关性种群大小\n" << chro_related_population.size() << "相关种群得分" 
+					<< final_goal / chro_related_population.size() << endl;
+
 				//        f_chro_result.close();
 
 				sort(chro_related_population.begin(), chro_related_population.end(), less<Chromosome>());
 				auto ic = chro_related_population.begin();
+				/*
 				for (auto it = chro_related_population.begin(); it != chro_related_population.end(); it++) {
 					cout << it->evaluation << endl;
-				}
+				}*/
+
 				//f_chro_result<<"#第"<<s<<"代染色体适应度函数值\n"<<
 				f_chro_result << ic->evaluation << endl;
 				cout << "最后染色体" << ic->evaluation << endl;
 				it_f = &(*ic);
-
 			}
 			f_chro_result.close();
 			ofstream f_chro_airtop_routing(temp_1 +"_airtop_routing.txt");

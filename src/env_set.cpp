@@ -180,7 +180,7 @@ void env_set(map<string, vector<vector<Waypoint>>>* flightrouting, vector<Flight
 
 			temp_flp->take_off = time_from_string(date_temp);
 			int hour = temp_flp->take_off.time_of_day().hours();
-			if ((hour != 8)&& (hour!=9)&&(hour!=10)&&(hour!=11))
+			if ((hour != 8))//&& (hour!=9)&&(hour!=10)&&(hour!=11))
 			{
 				continue;
 			}
